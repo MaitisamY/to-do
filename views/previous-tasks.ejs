@@ -1,0 +1,128 @@
+<%- include("partials/header.ejs") %>
+<header>
+    <h1><a class="logo" href="/home">PLANNER</a></h1>
+    <form action="/add/new" method="POST">
+        <input type="text" name="task" placeholder="What's in your mind?... Start adding tasks here... Keep it short and meaningful :D" required autofocus>
+        <select name="category">
+            <% categories.forEach(category => { %>
+                <% if(category.id == 1) { %>
+                    <option class="<%=category.color%>" value="<%= category.id %>" selected><%= category.category_name %></option>
+                <% } else { %>
+                    <option class="<%=category.color%>" value="<%= category.id %>"><%= category.category_name %></option>
+                <% } %>
+            <% }) %>
+        </select>
+        <input type="submit" value="Create">
+    </form>
+    <div class="link-container">
+        <a class="links" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
+            <img alt="home icon" src="/images/home.png" width="30" height="30" />
+        </a>
+        <a class="links active" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
+            <img alt="history icon" src="/images/history.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
+            <img alt="calendar icon" src="/images/calendar.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/profile" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
+            <img alt="profile image" src="/images/profile.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/logout" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
+            <img alt="logout icon" src="/images/logout.png" width="30" height="30" />
+        </a>
+        <span id="1" class="titletip" hidden>Home</span>
+        <span id="2" class="titletip" hidden>Tasks History</span>
+        <span id="3" class="titletip" hidden>Calendar View</span>
+        <span id="4" class="titletip" hidden>Profile</span>
+        <span id="5" class="titletip" hidden>Logout</span>
+    </div>
+</header>
+<main>
+    <%
+        const currentDate = new Date();
+        const currentMonthYear = currentDate.toLocaleString('en-US', { year: 'numeric', month: 'long' });
+
+        const distinctMonthsAndYears = [...new Set(
+        taskList
+            .filter(task => new Date(task.date).toLocaleString('en-US', { year: 'numeric', month: 'long' }) !== currentMonthYear)
+            .map(task => new Date(task.date).toLocaleString('en-US', { year: 'numeric', month: 'long' }))
+    )];
+    %>
+    <% if (distinctMonthsAndYears.length == 0) { %>
+        <div class="newTaskIntro">
+            <h4>Welcome to your planner &#128400;</h4>
+            <ul>
+                <li>
+                    You can create as many tasks as you want from this page too.
+                </li>
+                <li>
+                    This page will show you all of your previous tasks i.e. previous months and years. 
+                </li>
+            </ul>
+        </div>
+        <% } else { %>
+    <!-- Create tab content for each month and year -->
+    <% distinctMonthsAndYears.forEach(monthYear => { %>
+        <% const tabId = `tab-${Math.random().toString(36).substring(7)}`; %>
+        <div class="tabs">
+            <div class="tab-container">
+                <div id="<%= tabId %>" class="tab-head" onclick="showTab('<%= monthYear %>', '<%= tabId %>')"><%= monthYear %></div>
+                <div class="tab-line"></div><div class="tab-circle"></div>    
+            </div>
+            <div id="<%= tabId %>" class="tab-content tab-hidden">
+                <% taskList
+                    .filter(task => new Date(task.date).toLocaleString('en-US', { year: 'numeric', month: 'long' }) === monthYear)
+                    .forEach(task => { %>
+                        <div class="newTask">
+                            <form action="/previous-tasks/done" method="POST">
+                                <label 
+                                    style="<%= task.status ? 'text-decoration: line-through;' : '' %>" 
+                                    id="label<%= task.id %>"
+                                >
+                                    <input 
+                                        type="text" 
+                                        name="taskId" 
+                                        value="<%= task.id %>" 
+                                        hidden
+                                    >
+                                    <span id="tooltip<%= task.id %>" class="tooltip" hidden>
+                                        <%= task.status ? 'Mark as not done' : 'Mark as done' %>
+                                    </span>
+                                    <input 
+                                        name="taskStatus" 
+                                        value="<%= task.status ? 'FALSE' : 'TRUE' %>" 
+                                        class="checkbox" 
+                                        type="checkbox" 
+                                        onchange="this.form.submit()"
+                                        <%= task.status ? 'checked' : '' %>
+                                        onmouseover="showTooltip('<%= task.id %>')"
+                                        onmouseout="hideTooltip('<%= task.id %>')"
+                                    >
+                                    &nbsp; <span id="task<%= task.id %>"><%= task.task_list %></span>
+                                </label>  
+                                <div>Date: <i><%= task.date %></i></div>
+                            </form>
+                            <form action="/previous-tasks/delete" method="POST">
+                                <input 
+                                    type="text" 
+                                    name="deleteTask" 
+                                    value="<%= task.id %>" 
+                                    hidden
+                                >
+                                <button title="Delete" class="btn-middle" type="submit">
+                                    <img alt="delete icon" src="/images/delete.png" width="30" height="30" />
+                                </button>
+                            </form>
+                        </div>
+                <% }); %>
+            </div>
+        </div>
+    <% }); %>
+    <% } %>
+</main>
+<% if(locals.message) { %>
+    <div id="message" class="message">
+        <%= locals.message %>
+    </div>
+<% } %>  
+<%- include("partials/footer.ejs") %>

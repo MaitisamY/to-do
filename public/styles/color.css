@@ -1,0 +1,35 @@
+.bg-default {
+    background-color: #bdbcbc;
+}
+
+.bg-personal {
+    background-color: #f7d2a9;
+}
+
+.bg-shopping {
+    background-color: #aaa9fa;
+}
+
+.bg-family {
+    background-color: #cea7fa;
+}
+
+.bg-work {
+    background-color: #fab6f1;
+}
+
+.bg-study {
+    background-color: #a5f3f8;
+}
+
+.bg-important {
+    background-color: #a1f7a1;
+}
+
+.bg-urgent {
+    background-color: #f88787;
+}
+
+.bg-other {
+    background-color: #d79cf1;
+}

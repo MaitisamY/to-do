@@ -1,0 +1,103 @@
+<%- include("partials/header.ejs") %>
+<header id="header">
+    <div></div>
+    <h1><a class="logo" href="/">PLANNER</a></h1>
+</header>
+<main>
+    <div id="login" class="newTaskIntro">
+        <h4>Login</h4>
+        <form action="/login" method="POST">
+            <input 
+                class="email"
+                type="email" 
+                name="email" 
+                id="login-email" 
+                placeholder="Email" 
+                required
+            >
+            <div>
+                <input 
+                    class="password"
+                    type="password" 
+                    name="password" 
+                    id="login-password" 
+                    placeholder="Password" 
+                    required
+                >
+                <a id="loginVisibility" onclick="loginVisibility()">
+                    <img 
+                        src="/images/eye.svg" 
+                        alt="eye password toggler" 
+                        width="30" 
+                        height="30"
+                    >
+                </a>
+                <a id="loginInvisibility" onclick="loginInvisibility()">
+                    <img 
+                        src="/images/eye-slash.svg" 
+                        alt="eye password toggler" 
+                        width="30" 
+                        height="30"
+                    >
+                </a>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <h5>Don't have an account? <a onclick="showSignup()">Register</a></h5>
+    </div>
+    <div id="signup" class="newTaskIntro" hidden>
+        <h4>Signup</h4>
+        <form action="/register" method="POST">
+            <input 
+                class="name"
+                type="text" 
+                name="name" 
+                id="name" 
+                placeholder="Full Name" 
+                required
+            >
+            <input 
+                class="email"
+                type="email" 
+                name="email" 
+                id="signup-email" 
+                placeholder="Email" 
+                required
+                hidden
+            >
+            <div>
+                <input 
+                    class="password"
+                    type="password" 
+                    name="password" 
+                    id="signup-password" 
+                    placeholder="Password" 
+                    required
+                >
+                <a id="signupVisibility" onclick="signupVisibility()">
+                    <img 
+                        src="/images/eye.svg" 
+                        alt="eye password toggler" 
+                        width="30" height="30"
+                    >
+                </a>
+                <a id="signupInvisibility" onclick="signupInvisibility()">
+                    <img 
+                        src="/images/eye-slash.svg" 
+                        alt="eye password toggler" 
+                        width="30" 
+                        height="30" 
+                    >
+                </a>
+            </div>
+            <button type="submit">Signup</button>
+        </form>
+        <h5>Already have an account? <a onclick="showLogin()">Login</a></h5>
+    </div>
+</main>
+<% if(locals.message) { %>
+    <div id="message" class="message">
+        <%= locals.message %>
+    </div>
+<% } %>  
+<%- include("partials/footer.ejs") %>

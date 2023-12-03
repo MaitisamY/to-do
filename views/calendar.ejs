@@ -1,0 +1,102 @@
+<%- include("partials/header.ejs") %>
+<header>
+    <h1><a class="logo" href="/home">PLANNER</a></h1>
+    <form action="/add/new" method="POST">
+        <input type="text" name="task" placeholder="What's in your mind?... Start adding tasks here... Keep it short and meaningful :D" required autofocus>
+        <select name="category">
+            <% categories.forEach(category => { %>
+                <% if(category.id == 1) { %>
+                    <option class="<%=category.color%>" value="<%= category.id %>" selected><%= category.category_name %></option>
+                <% } else { %>
+                    <option class="<%=category.color%>" value="<%= category.id %>"><%= category.category_name %></option>
+                <% } %>
+            <% }) %>
+        </select>
+        <input type="submit" value="Create">
+    </form>
+    <div class="link-container">
+        <a class="links" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
+            <img alt="home icon" src="/images/home.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
+            <img alt="history icon" src="/images/history.png" width="30" height="30" />
+        </a>
+        <a class="links active" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
+            <img alt="calendar icon" src="/images/calendar.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/profile" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
+            <img alt="profile image" src="/images/profile.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/logout" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
+            <img alt="logout icon" src="/images/logout.png" width="30" height="30" />
+        </a>
+        <span id="1" class="titletip" hidden>Home</span>
+        <span id="2" class="titletip" hidden>Tasks History</span>
+        <span id="3" class="titletip" hidden>Calendar View</span>
+        <span id="4" class="titletip" hidden>Profile</span>
+        <span id="5" class="titletip" hidden>Logout</span>
+    </div>
+</header>
+<main>
+    <% 
+        const currentDate = new Date();
+        const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay(); // 0 for Sunday, 1 for Monday, etc.
+    %>
+    <% 
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    %>
+    <div class="commonBox">
+        <h2 style="text-align: center;"><%= monthNames[currentDate.getMonth()] %> <%= currentDate.getFullYear() %></h2>
+        <ul>
+            <li>This calendar holds all your tasks for the current month.</li>
+            <li>It is advised to keep tasks shorter, it will be easier for you to manage and go through them.</li>
+            <li>After the current month, the new calendar will be created. 
+                In the calendar view, we do not keep track of previous months.</li>
+        </ul>
+    </div>
+    <table style="width: 80%; border-collapse: collapse; padding: 2rem; font-family: 'Kanit', sans-serif;">
+        <thead>
+            <tr>
+                <% for (let i = 0; i < dayNames.length; i++) { %>
+                    <th style="width: 150px; text-align: center; padding: 10px 0px; border: 1px solid #e4e3e3;">
+                        <%= dayNames[(i + firstDayOfMonth) % 7] %>
+                    </th>
+                <% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let day = 1; day <= daysInMonth; day++) { %>
+                <% if (day % 7 === 1) { %>
+                    <tr>
+                <% } %>
+                <td style="text-align: center; border: 1px solid #e4e3e3;">
+                    <div class="box">
+                        <div class="<% if(day === new Date().getDate()) { %> box-current-date <% } else { %> box-date <% } %>">
+                            <%= day %>
+                        </div>
+                        <ol>
+                            <% const formattedDate = `${dayNames[(firstDayOfMonth + day - 1) % 7]}, ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`; %>
+                            <% const filteredTasks = taskList.filter(task => task.date === formattedDate); %>
+                            <% filteredTasks.forEach(task => { %>
+                                <div class="box-data">
+                                    <li><%= task.task_list %></li>
+                                </div>
+                            <% })%>
+                        </ol>
+                    </div>
+                </td>
+                <% if (day % 7 === 0) { %>
+                    </tr>
+                <% } %>
+            <% } %>
+        </tbody>
+    </table>
+</main>
+<% if(locals.message) { %>
+    <div id="message" class="message">
+        <%= locals.message %>
+    </div>
+<% } %>  
+<%- include("partials/footer.ejs") %>

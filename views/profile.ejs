@@ -1,0 +1,180 @@
+<%- include("partials/header.ejs") %>
+<header id="header">
+    <h1><a class="logo" href="/home">PLANNER</a></h1>
+    <form action="/add/new" method="POST">
+        <input type="text" name="task" placeholder="What's in your mind?... Start adding tasks here... Keep it short and meaningful :D" required autofocus>
+        <select name="category">
+            <% categories.forEach(category => { %>
+                <% if(category.id == 1) { %>
+                    <option class="<%=category.color%>" value="<%= category.id %>" selected><%= category.category_name %></option>
+                <% } else { %>
+                    <option class="<%=category.color%>" value="<%= category.id %>"><%= category.category_name %></option>
+                <% } %>
+            <% }) %>
+        </select>
+        <input type="submit" value="Create">
+    </form>
+    <div class="link-container">
+        <a class="links" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
+            <img alt="home icon" src="/images/home.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
+            <img alt="history icon" src="/images/history.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
+            <img alt="calendar icon" src="/images/calendar.png" width="30" height="30" />
+        </a>
+        <a class="links active" href="/profile" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
+            <img alt="profile image" src="/images/profile.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/logout" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
+            <img alt="logout icon" src="/images/logout.png" width="30" height="30" />
+        </a>
+        <span id="1" class="titletip" hidden>Home</span>
+        <span id="2" class="titletip" hidden>Tasks History</span>
+        <span id="3" class="titletip" hidden>Calendar View</span>
+        <span id="4" class="titletip" hidden>Profile</span>
+        <span id="5" class="titletip" hidden>Logout</span>
+    </div>
+</header>
+<main>
+    <div class="profileBox">
+        <div class="profile-card">
+            <img id="show-image" alt="profile image" src="/images/person-circle.svg" width="40" height="40" />
+            <div id="show-name" class="show-name"><%= locals.user.name %></div>
+            <div id="show-email" class="show-email"><%= locals.user.email %></div>
+            <div id="editProfileNameEmail" hidden>
+                <form action="/profile/update-name-email" method="POST">
+                    <input 
+                        type="text" 
+                        name="name" 
+                        placeholder="Name" 
+                        value="<%= locals.user.name %>" 
+                        oninput="validateName(this)"
+                        required
+                    >
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email" 
+                        value="<%= locals.user.email %>" 
+                        required
+                    >
+                    <input type="submit" value="Update">
+                </form>
+                <ul>
+                    <li>Name cannot contain any special characters.</li>
+                </ul>
+            </div>
+            <div id="changeProfilePassword" hidden>
+                <form action="/profile/update-password" method="POST">
+                    <div class="password-row">
+                        <input 
+                            id="currentPassword"
+                            type="password" 
+                            name="currentPassword" 
+                            placeholder="Current Password" 
+                            onpaste="return false"
+                            required
+                        >
+                        <a style="display: none;" id="currentPasswordVisible" onclick="currentPasswordVisibility()">
+                            <img 
+                                src="/images/eye.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                            >
+                        </a>
+                        <a id="currentPasswordInvisible" onclick="currentPasswordInvisibility()">
+                            <img 
+                                src="/images/eye-slash.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                            >
+                        </a>
+                    </div>
+                    <div class="password-row">
+                        <input 
+                            id="newPassword"
+                            type="password" 
+                            name="newPassword" 
+                            placeholder="New Password" 
+                            onpaste="return false"
+                            minlength="8"
+                            required
+                        >
+                        <a style="display: none;" id="newPasswordVisible" onclick="newPasswordVisibility()">
+                            <img 
+                                src="/images/eye.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                            >
+                        </a>
+                        <a id="newPasswordInvisible" onclick="newPasswordInvisibility()">
+                            <img 
+                                src="/images/eye-slash.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                            >
+                        </a>
+                    </div>
+                    <div class="password-row">
+                        <input 
+                            id="reTypeNewPassword"
+                            type="password" 
+                            name="reTypeNewPassword" 
+                            placeholder="Re-Type New Password" 
+                            onpaste="return false"
+                            minlength="8"
+                            required
+                        >
+                        <a style="display: none;" id="reTypeNewPasswordVisible" onclick="reTypeNewPasswordVisibility()">
+                            <img 
+                                src="/images/eye.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                            >
+                        </a>
+                        <a id="reTypeNewPasswordInvisible" onclick="reTypeNewPasswordInvisibility()">
+                            <img 
+                                src="/images/eye-slash.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                            >
+                        </a>
+                    </div>
+                    <input type="submit" value="Update">
+                </form>
+                <ul>
+                    <li>Password must be at least 8 characters long.</li>
+                    <li>Copy/ Pasting is not allowed.</li>
+                </ul>
+            </div>
+            <div class="link-holder">
+                <a class="short" id="edit-profile" onclick="editProfile()">
+                    <img alt="Edit profile icon" src="/images/profile-edit.png" width="30" height="30" />
+                </a>
+                <a class="short" id="change-password" onclick="changePassword()">
+                    <img alt="Change password icon" src="/images/password.png" width="30" height="30" />
+                </a>
+                <a class="long" id="cancel-edit-profile" onclick="cancelEditProfile()">
+                    <img alt="Cancel edit profile icon" src="/images/cross.png" width="30" height="30" />
+                </a>
+                <a class="long" id="cancel-change-password" onclick="cancelChangePassword()">
+                    <img alt="Cancel change password icon" src="/images/cross.png" width="30" height="30" />
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+<% if(locals.message) { %>
+    <div id="message" class="message">
+        <%= locals.message %>
+    </div>
+<% } %>  
+<%- include("partials/footer.ejs") %>
