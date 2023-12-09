@@ -5,7 +5,7 @@
         <input 
             type="text" 
             name="task" 
-            placeholder="Start typing tasks here... Keep it short and meaningful :)" 
+            placeholder="Type tasks here..." 
             required 
             autofocus
         >
@@ -58,22 +58,22 @@
     </form>
     <div class="link-container">
         <a class="links active" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
-            <img alt="Home icon" src="/images/home.png" width="30" height="30" />
+            <img alt="Home icon" src="/images/home.png" />
         </a>
         <a class="links" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
-            <img alt="History icon" src="/images/history.png" width="30" height="30" />
+            <img alt="History icon" src="/images/history.png" />
         </a>
         <a class="links" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
-            <img alt="Calendar icon" src="/images/calendar.png" width="30" height="30" />
+            <img alt="Calendar icon" src="/images/calendar.png" />
         </a>
         <a class="links" id="dropdown-btn" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
-            <img alt="Categories image" src="/images/create-cats.png" width="30" height="30" />
+            <img alt="Categories image" src="/images/create-cats.png" />
         </a>
         <a class="links" href="/profile" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
-            <img alt="Profile image" src="/images/profile.png" width="30" height="30" />
+            <img alt="Profile image" src="/images/profile.png" />
         </a>
         <a class="links" href="/logout" onmouseover="showTitletip(6)" onmouseout="hideTitletip(6)">
-            <img alt="Logout icon" src="/images/logout.png" width="30" height="30" />
+            <img alt="Logout icon" src="/images/logout.png" />
         </a>
         <span id="1" class="titletip" hidden>Home</span>
         <span id="2" class="titletip" hidden>Tasks History</span>
@@ -255,4 +255,7 @@
         <%= locals.message %>
     </div>
 <% } %>
+<div class="display-when-below-300">
+    <p>This site is not supported below 300 pixels of width.</p>
+</div>
 <%- include("partials/footer.ejs") %>

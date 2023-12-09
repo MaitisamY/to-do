@@ -5,7 +5,7 @@
         <input 
             type="text" 
             name="task" 
-            placeholder="Start typing tasks here... Keep it short and meaningful :)" 
+            placeholder="Type tasks here..." 
             required 
             autofocus
         >
@@ -58,22 +58,22 @@
     </form>
     <div class="link-container">
         <a class="links" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
-            <img alt="Home icon" src="/images/home.png" width="30" height="30" />
+            <img alt="Home icon" src="/images/home.png" />
         </a>
         <a class="links" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
-            <img alt="History icon" src="/images/history.png" width="30" height="30" />
+            <img alt="History icon" src="/images/history.png" />
         </a>
         <a class="links active" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
-            <img alt="Calendar icon" src="/images/calendar.png" width="30" height="30" />
+            <img alt="Calendar icon" src="/images/calendar.png" />
         </a>
         <a class="links" id="dropdown-btn" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
-            <img alt="Categories image" src="/images/create-cats.png" width="30" height="30" />
+            <img alt="Categories image" src="/images/create-cats.png" />
         </a>
         <a class="links" href="/profile" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
-            <img alt="Profile image" src="/images/profile.png" width="30" height="30" />
+            <img alt="Profile image" src="/images/profile.png" />
         </a>
         <a class="links" href="/logout" onmouseover="showTitletip(6)" onmouseout="hideTitletip(6)">
-            <img alt="Logout icon" src="/images/logout.png" width="30" height="30" />
+            <img alt="Logout icon" src="/images/logout.png" />
         </a>
         <span id="1" class="titletip" hidden>Home</span>
         <span id="2" class="titletip" hidden>Tasks History</span>
@@ -130,47 +130,52 @@
                 In the calendar view, we do not keep track of previous months.</li>
         </ul>
     </div>
-    <table class="calendar-view-table">
-        <thead>
-            <tr>
-                <% for (let i = 0; i < dayNames.length; i++) { %>
-                    <th>
-                        <%= dayNames[(i + firstDayOfMonth) % 7] %>
-                    </th>
-                <% } %>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (let day = 1; day <= daysInMonth; day++) { %>
-                <% if (day % 7 === 1) { %>
-                    <tr>
-                <% } %>
-                <td>
-                    <div class="box">
-                        <div class="<% if(day === new Date().getDate()) { %> box-current-date <% } else { %> box-date <% } %>">
-                            <%= day %>
+    <div class="calendar-view">
+        <table class="calendar-view-table">
+            <thead>
+                <tr>
+                    <% for (let i = 0; i < dayNames.length; i++) { %>
+                        <th>
+                            <%= dayNames[(i + firstDayOfMonth) % 7] %>
+                        </th>
+                    <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let day = 1; day <= daysInMonth; day++) { %>
+                    <% if (day % 7 === 1) { %>
+                        <tr>
+                    <% } %>
+                    <td>
+                        <div class="box">
+                            <div class="<% if(day === new Date().getDate()) { %> box-current-date <% } else { %> box-date <% } %>">
+                                <%= day %>
+                            </div>
+                            <ol>
+                                <% const formattedDate = `${dayNames[(firstDayOfMonth + day - 1) % 7]}, ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`; %>
+                                <% const filteredTasks = taskList.filter(task => task.date === formattedDate); %>
+                                <% filteredTasks.forEach(task => { %>
+                                    <div class="box-data">
+                                        <li><%= task.task_list %></li>
+                                    </div>
+                                <% })%>
+                            </ol>
                         </div>
-                        <ol>
-                            <% const formattedDate = `${dayNames[(firstDayOfMonth + day - 1) % 7]}, ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`; %>
-                            <% const filteredTasks = taskList.filter(task => task.date === formattedDate); %>
-                            <% filteredTasks.forEach(task => { %>
-                                <div class="box-data">
-                                    <li><%= task.task_list %></li>
-                                </div>
-                            <% })%>
-                        </ol>
-                    </div>
-                </td>
-                <% if (day % 7 === 0) { %>
-                    </tr>
+                    </td>
+                    <% if (day % 7 === 0) { %>
+                        </tr>
+                    <% } %>
                 <% } %>
-            <% } %>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </main>
 <% if(locals.message) { %>
     <div id="message" class="message">
         <%= locals.message %>
     </div>
 <% } %>  
+<div class="display-when-below-300">
+    <p>This site is not supported below 300 pixels of width.</p>
+</div>
 <%- include("partials/footer.ejs") %>
