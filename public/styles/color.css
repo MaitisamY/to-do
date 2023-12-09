@@ -1,35 +1,105 @@
+/* If deleted */
+
+.bg-none {
+    background-color: #faecec;
+}
+
+/* In-Built colors */
+
 .bg-default {
     background-color: #bdbcbc;
 }
 
 .bg-personal {
-    background-color: #f7d2a9;
+    background-color: #e6ada3;
 }
 
 .bg-shopping {
-    background-color: #aaa9fa;
+    background-color: #dba48f;
 }
 
 .bg-family {
-    background-color: #cea7fa;
+    background-color: #d8b08f;
 }
 
 .bg-work {
-    background-color: #fab6f1;
+    background-color: #e0c398;
 }
 
 .bg-study {
-    background-color: #a5f3f8;
+    background-color: #e7df91;
 }
 
 .bg-important {
-    background-color: #a1f7a1;
+    background-color: #bcdd86;
 }
 
 .bg-urgent {
-    background-color: #f88787;
+    background-color: #87cf80;
 }
 
 .bg-other {
-    background-color: #d79cf1;
+    background-color: #7dcc9e;
+}
+
+/* Custom colors */
+
+.bg-yellow {
+    background-color: #d3db87;
+}
+
+.bg-sea-green {
+    background-color: #82caaf;
+}
+
+.bg-sea-blue {
+    background-color: #7ef7e7;
+}
+
+.bg-light-blue {
+    background-color: #88c5e0;
+}
+
+.bg-blue {
+    background-color: #8097d6;
+}
+
+.bg-dark-blue {
+    background-color: #7278c4;
+}
+
+.bg-purple {
+    background-color: #b677e9;
+}
+
+.bg-pink-purple {
+    background-color: #cc6be9;
+}
+
+.bg-pink {
+    background-color: #e68de9;
+}
+
+.bg-baby-pink {
+    background-color: #e68dc8;
+}
+
+.bg-dark-pink {
+    background-color: #b37e96;
+}
+
+.bg-dirty-red {
+    background-color: #bb8387;
+}
+
+.bg-dirty-orange {
+    background-color: #e6ca8db2;
+}
+
+.bg-dirty-yellow {
+    background-color: #f1d575b2;
+}
+
+.bg-dirty-pink {
+    background-color: #cf8dc6b2;
 }

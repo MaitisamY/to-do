@@ -8,23 +8,23 @@ body {
 ::-webkit-scrollbar {
     width: 8px;
     border-radius: 10px;
-  }
+}
   
-  /* Track */
+/* Track */
   ::-webkit-scrollbar-track {
     background: #fff; 
-  }
+}
    
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #4c8492; 
     border-radius: 20px;
-  }
+}
   
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #3c6672; 
-  }
+}
 
 header {
     display: grid;
@@ -43,12 +43,13 @@ header {
 
 header form {
     grid-area: 1 / 2 / 1 / 2;
-    width: 100%;
+    width: 98%;
     justify-content: center;
     align-items: center;
     border: 2px solid #4c474d;
     padding: 0;
     border-radius: 5px;
+    position: relative;
 }
 
 header input[type=text], 
@@ -69,7 +70,7 @@ header select {
     border-right: 2px solid #4c474d;
     border-bottom: none;
     border-left: 2px solid #4c474d;
-    padding: 15px 15px 15px 12px;
+    padding: 15px 10px 15px 10px;
     font-family: 'Kanit', sans-serif;
     font-size: 16px;
     outline: none;
@@ -85,11 +86,106 @@ header select option {
 header input[type=submit] {
     background-color: transparent;
     border: none;
-    padding: 15px 12px;
+    padding: 15px 12px 15px 12px;
     cursor: pointer;
     font-family: 'Kanit', sans-serif;
     font-size: 16px;
     outline: none;
+}
+
+.category-dropdown {
+    display: none;
+    position: absolute;
+    width: auto;
+    min-width: 180px;
+    min-height: 300px;
+    top: 104%;
+    right: 5%;
+    padding: 0;
+    background-color: #fffde8;
+    z-index: 1;
+    border-radius: 5px;
+    -webkit-animation-name: slideDown;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideDown;
+    animation-duration: 0.4s;
+    -webkit-box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+}
+
+.category-dropdown-content {
+    padding: 0;
+    margin: 0;
+    display: block;
+    font-size: 20px;
+    text-align: center;
+}
+
+.category-dropdown-content ul {
+    list-style-type: none;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.category-dropdown-content li {
+    display: flex;
+    flex-direction: row;
+     padding: 10px 0 0 0;
+    position: relative;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid #e4e3e3;
+    border-left: none;
+}
+
+.category-dropdown-content li label {
+    margin-left: 10px;
+}
+
+.category-dropdown-content li i {
+    font-style: normal;
+    margin-left: 150%;
+    word-break: keep-all;
+    font-size: 18px;
+    padding: 3px 0 3px 0;
+}
+
+.category-dropdown-content li a {
+    display: inline-block;
+    text-decoration: none;
+    color: #4c474d;
+    font-size: 15px;
+    padding: 10px 0 0 0;
+    margin: 5px 0 0 3px;
+}
+
+header button {
+    background-color: transparent;
+    padding: 15px 10px 15px 10px;
+    cursor: pointer;
+    font-family: 'Kanit', sans-serif;
+    font-size: 16px;
+    outline: none;
+    border-top: none;
+    border-right: 2px solid #4c474d;
+    border-bottom: none;
+    border-left: 2px solid #4c474d;
+}
+
+header button i {
+    float: none;
+    font-style: normal;
+}
+
+header button span {
+    float: right;
+    margin-left: 10px;
+}
+
+header button span.hidden {
+    display: none;
 }
 
 input[type="checkbox"]::before {
@@ -135,7 +231,7 @@ input[type="checkbox"]:checked::before {
 
 .titletip {
     position: absolute;
-    top: 102%;
+    bottom: 104%;
     left: 25%;
     width: 50%;
     height: auto;
@@ -144,7 +240,6 @@ input[type="checkbox"]:checked::before {
     padding: 3px 12px;
     border-radius: 5px;
     font-size: 16px;
-    text-align: center;
     font-family: 'Kanit', sans-serif;
     place-self: center;
     align-self: center;
@@ -226,6 +321,225 @@ main {
     border-radius: 5px; 
     padding: 3px 15px;
     margin: 0 5px 5px 0;
+}
+
+.categoryBox { 
+    box-shadow: 0 4px 8px 0 rgba(247, 224, 161, 0.5), 0 6px 20px 0 rgba(247, 224, 161, 0.5) ;
+    position: relative;
+    margin: 20px;
+    width: 300px;
+    min-height: 200px;
+    max-height: auto;
+    word-wrap: break-word;
+    padding: 5px 20px 30px 20px;
+    border-radius: 5px;
+    font-size: larger;
+    text-align: center;
+    align-self: center;
+    font-family: 'Kanit', sans-serif;
+    background-color: #f7e0a3;
+}
+
+.categoryBox h4 {
+    font-size: 30px;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 20px 0 5px 0;
+}
+
+.home-category h5 {
+    font-size: 20px;
+    margin: 20px 0 5px 0;
+    padding: 0; 
+}
+
+.categoryBox ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    margin: 20px 0 0 0; 
+}
+
+.categoryBox li {
+    display: block; 
+    color: #4c474d;
+    border-radius: 5px; 
+    padding: 3px 15px;
+    margin: 0 5px 5px 0;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    width: 225px;
+    min-height: 300px;
+    top: 104%;
+    right: 10%;
+    padding: 10px 15px 10px 15px;
+    background-color: #fffde8;
+    z-index: 1;
+    border-radius: 5px;
+    -webkit-animation-name: slideDown;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideDown;
+    animation-duration: 0.4s;
+    -webkit-box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+}
+
+.dropdown-content {
+    padding: 0;
+    margin: 0;
+    display: block;
+    font-size: 20px;
+    text-align: center;
+}
+
+.dropdown form {
+    padding: 0;
+    margin: 0;
+    border: none;
+    width: 100%;
+}
+
+.dropdown input[type=text], 
+.dropdown input[type=text]:hover, 
+.dropdown input[type=text]:focus, 
+.dropdown input[type=text]:active {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 15px;
+    width: 80%;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #4c474d;
+    background-color: transparent;
+    outline: none;
+    font-family: 'Kanit', sans-serif;
+}
+
+.dropdown input[type=submit] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #4c474d;
+    background-color: transparent;
+    outline: none;
+    font-family: 'Kanit', sans-serif;
+}
+
+.dropdown input[type=submit]:hover, .dropdown input[type=submit]:focus, .dropdown input[type=submit]:active {
+    border: 2px solid #000;
+    background-color: transparent;
+}
+
+.dropdown p {
+    padding: 10px 0; 
+    font-size: 16px;
+    font-family: 'Kanit', sans-serif;
+}
+
+.dropdown ul {
+    list-style-type: circle;
+     padding: 2px 15px;
+    margin: 0;
+    text-align: left;
+    width: 92%;
+}
+
+.dropdown ul li {
+    color: #4c474d;
+    padding: 3px;
+    font-size: 15px;
+}
+
+.dropdown .invalid {
+    outline: 2px solid #b82d2d;
+    border: 2px solid #b82d2d;
+}
+
+.container-holder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.container {
+    position: relative;
+    padding: 15px 0px 15px 35px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+/* .container:hover input ~ .checkmark {
+    background-color: rgba(255, 255, 255, 0.2);
+} */
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #4c8492;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.show {
+    display: inline-block;
 }
 
 .newTaskIntro {
@@ -361,6 +675,10 @@ main {
     color: #4c8492;
 }
 
+.newTaskIntro ul {
+    list-style-type: circle;
+}
+
 .commonBox {
     position: relative;
     margin: 20px;
@@ -377,6 +695,10 @@ main {
     font-family: 'Kanit', sans-serif;
 }
 
+.commonBox h2 {
+    text-align: center;
+}
+
 .commonBox h4 {
     font-size: 30px;
     text-transform: uppercase;
@@ -389,6 +711,29 @@ main {
 
 .commonBox span {
     font-size: larger;
+}
+
+.commonBox ul {
+    list-style-type: circle;
+}
+
+.calendar-view-table {
+    width: 80%; 
+    border-collapse: 
+    collapse; padding: 2rem; 
+    font-family: 'Kanit', sans-serif;
+}
+
+.calendar-view-table th {
+    width: 150px; 
+    text-align: center; 
+    padding: 10px 0px; 
+    border: 1px solid #e4e3e3;
+}
+
+.calendar-view-table td {
+    text-align: center; 
+    border: 1px solid #e4e3e3;
 }
 
 .profileBox {
@@ -532,6 +877,10 @@ main {
     border: none;
 }
 
+.profileBox ul {
+    list-style-type: circle;
+}
+
 .newTask {
     position: relative;
     margin: 20px;
@@ -558,7 +907,7 @@ main {
     background-color: #4c8492;
     color: #fff;
     padding: 5px;
-    border-radius: 0px 0px 0px 5px;
+    border-radius: 0px 5px 0px 5px;
     font-size: 15px;
     text-align: center;
     font-family: 'Kanit', sans-serif;
@@ -586,7 +935,7 @@ main {
     font-family: 'Kanit', sans-serif;
     width: fit-content;
     justify-content: space-between;
-    color: #4c474d;
+    color: #000;
 }
 
 .newTask form div {
@@ -908,6 +1257,16 @@ footer {
 @keyframes slideIn {
     from {bottom: 0; opacity: 0}
     to {bottom: 3%; opacity: 1}
+}
+
+@-webkit-keyframes slideDown {
+    from {top: 0; opacity: 0} 
+    to {top: 104%; opacity: 1}
+}
+
+@keyframes slideDown {
+    from {top: 0; opacity: 0} 
+    to {top: 104%; opacity: 1}
 }
 
 @-webkit-keyframes fadeIn {

@@ -1,40 +1,114 @@
 <%- include("partials/header.ejs") %>
 <header id="header">
     <h1><a class="logo" href="/home">PLANNER</a></h1>
-    <form action="/add/new" method="POST">
-        <input type="text" name="task" placeholder="What's in your mind?... Start adding tasks here... Keep it short and meaningful :D" required autofocus>
-        <select name="category">
-            <% categories.forEach(category => { %>
-                <% if(category.id == 1) { %>
-                    <option class="<%=category.color%>" value="<%= category.id %>" selected><%= category.category_name %></option>
-                <% } else { %>
-                    <option class="<%=category.color%>" value="<%= category.id %>"><%= category.category_name %></option>
-                <% } %>
-            <% }) %>
-        </select>
+    <form action="/profile/add/task" method="POST">
+        <input 
+            type="text" 
+            name="task" 
+            placeholder="Start typing tasks here... Keep it short and meaningful :)" 
+            required 
+            autofocus
+        >
+        <button id="category-dropdown-btn" class="btn-add" type="button">
+            <i>Category</i>
+            <span><img alt="Toggle button" src="/images/down.png" width="20" /></span>
+            <span class="hidden"><img alt="Toggle button" src="/images/up.png" width="20" /></span>
+        </button>
+        <div class="category-dropdown">
+            <div class="category-dropdown-content">
+                <ul>
+                    <% categories.forEach(category => { %>
+                        <% if(category.id == 1) { %>
+                        <li>
+                            <label class="container">
+                                <input type="radio" name="category" value="<%= category.id %>" checked>
+                                <span class="checkmark <%=category.color%>"> <i><%= category.category_name %></i></span>
+                            </label>
+                        </li>
+                        <% } else { %>
+                        <li>    
+                            <label class="container">
+                                <input type="radio" name="category" value="<%= category.id %>">
+                                <span class="checkmark <%=category.color%>"> <i><%= category.category_name %></i></span>
+                            </label>
+                        </li>    
+                        <% } %>
+                    <% }) %>
+                    <% if(locals.userCategory != null) { %>
+                        <% userCategory.forEach(category => { %>
+                        <li>    
+                            <label class="container">
+                                <input type="radio" name="category" value="<%= category.id %>">
+                                <span class="checkmark <%=category.color%>">
+                                    <i><%= category.category_name %></i>
+                                </span>
+                                <a 
+                                    title="Deleted category will automatically be set to default" 
+                                    href="/profile/delete/category/<%=category.id%>">
+                                    Delete
+                                </a>
+                            </label>
+                        </li>
+                            <% }) %>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
         <input type="submit" value="Create">
     </form>
     <div class="link-container">
         <a class="links" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
-            <img alt="home icon" src="/images/home.png" width="30" height="30" />
+            <img alt="Home icon" src="/images/home.png" width="30" height="30" />
         </a>
         <a class="links" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
-            <img alt="history icon" src="/images/history.png" width="30" height="30" />
+            <img alt="History icon" src="/images/history.png" width="30" height="30" />
         </a>
         <a class="links" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
-            <img alt="calendar icon" src="/images/calendar.png" width="30" height="30" />
+            <img alt="Calendar icon" src="/images/calendar.png" width="30" height="30" />
         </a>
-        <a class="links active" href="/profile" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
-            <img alt="profile image" src="/images/profile.png" width="30" height="30" />
+        <a class="links" id="dropdown-btn" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
+            <img alt="Categories image" src="/images/create-cats.png" width="30" height="30" />
         </a>
-        <a class="links" href="/logout" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
-            <img alt="logout icon" src="/images/logout.png" width="30" height="30" />
+        <a class="links active" href="/profile" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
+            <img alt="Profile image" src="/images/profile.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/logout" onmouseover="showTitletip(6)" onmouseout="hideTitletip(6)">
+            <img alt="Logout icon" src="/images/logout.png" width="30" height="30" />
         </a>
         <span id="1" class="titletip" hidden>Home</span>
         <span id="2" class="titletip" hidden>Tasks History</span>
         <span id="3" class="titletip" hidden>Calendar View</span>
-        <span id="4" class="titletip" hidden>Profile</span>
-        <span id="5" class="titletip" hidden>Logout</span>
+        <span id="4" class="titletip" hidden>Create Category</span>
+        <span id="5" class="titletip" hidden>Profile</span>
+        <span id="6" class="titletip" hidden>Logout</span>
+        <div class="dropdown">
+            <div class="dropdown-content">
+                <h4>Create Category</h4>
+                <form action="/profile/add/category" method="POST">
+                    <input 
+                        id="textInput" 
+                        type="text" 
+                        name="categoryName" 
+                        maxlength="15" 
+                        min="3" 
+                        placeholder="Enter category name"
+                        oninput="validateCategoryName(this)"
+                        onkeypress="return restrictSpace()" 
+                        required
+                    >
+                    <p>Pick a color</p>
+                    <div class="container-holder">
+                        <%- include("partials/color-radio.ejs") %>
+                    </div>
+                    <ul>
+                        <li>Category name must be less than or equal to 10 characters.</li>
+                        <li>Category name must not contain any special characters, spaces or numbers.</li>
+                        <li>Color selection is mandatory.</li>
+                    </ul>
+                    <input type="submit" value="Create">
+                </form>
+            </div>
+        </div>
     </div>
 </header>
 <main>

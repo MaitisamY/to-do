@@ -1,54 +1,128 @@
 <%- include("partials/header.ejs") %>
-<header>
+<header id="header">
     <h1><a class="logo" href="/home">PLANNER</a></h1>
-    <form action="/add/new" method="POST">
-        <input type="text" name="task" placeholder="What's in your mind?... Start adding tasks here... Keep it short and meaningful :D" required autofocus>
-        <select name="category">
-            <% categories.forEach(category => { %>
-                <% if(category.id == 1) { %>
-                    <option class="<%=category.color%>" value="<%= category.id %>" selected><%= category.category_name %></option>
-                <% } else { %>
-                    <option class="<%=category.color%>" value="<%= category.id %>"><%= category.category_name %></option>
-                <% } %>
-            <% }) %>
-        </select>
+    <form action="/calendar/add/task" method="POST">
+        <input 
+            type="text" 
+            name="task" 
+            placeholder="Start typing tasks here... Keep it short and meaningful :)" 
+            required 
+            autofocus
+        >
+        <button id="category-dropdown-btn" class="btn-add" type="button">
+            <i>Category</i>
+            <span><img alt="Toggle button" src="/images/down.png" width="20" /></span>
+            <span class="hidden"><img alt="Toggle button" src="/images/up.png" width="20" /></span>
+        </button>
+        <div class="category-dropdown">
+            <div class="category-dropdown-content">
+                <ul>
+                    <% categories.forEach(category => { %>
+                        <% if(category.id == 1) { %>
+                        <li>
+                            <label class="container">
+                                <input type="radio" name="category" value="<%= category.id %>" checked>
+                                <span class="checkmark <%=category.color%>"> <i><%= category.category_name %></i></span>
+                            </label>
+                        </li>
+                        <% } else { %>
+                        <li>    
+                            <label class="container">
+                                <input type="radio" name="category" value="<%= category.id %>">
+                                <span class="checkmark <%=category.color%>"> <i><%= category.category_name %></i></span>
+                            </label>
+                        </li>    
+                        <% } %>
+                    <% }) %>
+                    <% if(locals.userCategory != null) { %>
+                        <% userCategory.forEach(category => { %>
+                        <li>    
+                            <label class="container">
+                                <input type="radio" name="category" value="<%= category.id %>">
+                                <span class="checkmark <%=category.color%>">
+                                    <i><%= category.category_name %></i>
+                                </span>
+                                <a 
+                                    title="Deleted category will automatically be set to default" 
+                                    href="/calendar/delete/category/<%=category.id%>">
+                                    Delete
+                                </a>
+                            </label>
+                        </li>
+                            <% }) %>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
         <input type="submit" value="Create">
     </form>
     <div class="link-container">
         <a class="links" href="/home" onmouseover="showTitletip(1)" onmouseout="hideTitletip(1)">
-            <img alt="home icon" src="/images/home.png" width="30" height="30" />
+            <img alt="Home icon" src="/images/home.png" width="30" height="30" />
         </a>
         <a class="links" href="/previous-tasks" onmouseover="showTitletip(2)" onmouseout="hideTitletip(2)">
-            <img alt="history icon" src="/images/history.png" width="30" height="30" />
+            <img alt="History icon" src="/images/history.png" width="30" height="30" />
         </a>
         <a class="links active" href="/calendar" onmouseover="showTitletip(3)" onmouseout="hideTitletip(3)">
-            <img alt="calendar icon" src="/images/calendar.png" width="30" height="30" />
+            <img alt="Calendar icon" src="/images/calendar.png" width="30" height="30" />
         </a>
-        <a class="links" href="/profile" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
-            <img alt="profile image" src="/images/profile.png" width="30" height="30" />
+        <a class="links" id="dropdown-btn" onmouseover="showTitletip(4)" onmouseout="hideTitletip(4)">
+            <img alt="Categories image" src="/images/create-cats.png" width="30" height="30" />
         </a>
-        <a class="links" href="/logout" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
-            <img alt="logout icon" src="/images/logout.png" width="30" height="30" />
+        <a class="links" href="/profile" onmouseover="showTitletip(5)" onmouseout="hideTitletip(5)">
+            <img alt="Profile image" src="/images/profile.png" width="30" height="30" />
+        </a>
+        <a class="links" href="/logout" onmouseover="showTitletip(6)" onmouseout="hideTitletip(6)">
+            <img alt="Logout icon" src="/images/logout.png" width="30" height="30" />
         </a>
         <span id="1" class="titletip" hidden>Home</span>
         <span id="2" class="titletip" hidden>Tasks History</span>
         <span id="3" class="titletip" hidden>Calendar View</span>
-        <span id="4" class="titletip" hidden>Profile</span>
-        <span id="5" class="titletip" hidden>Logout</span>
+        <span id="4" class="titletip" hidden>Create Category</span>
+        <span id="5" class="titletip" hidden>Profile</span>
+        <span id="6" class="titletip" hidden>Logout</span>
+        <div class="dropdown">
+            <div class="dropdown-content">
+                <h4>Create Category</h4>
+                <form action="/calendar/add/category" method="POST">
+                    <input 
+                        id="textInput" 
+                        type="text" 
+                        name="categoryName" 
+                        maxlength="15" 
+                        min="3" 
+                        placeholder="Enter category name"
+                        oninput="validateCategoryName(this)"
+                        onkeypress="return restrictSpace()" 
+                        required
+                    >
+                    <p>Pick a color</p>
+                    <div class="container-holder">
+                        <%- include("partials/color-radio.ejs") %>
+                    </div>
+                    <ul>
+                        <li>Category name must be less than or equal to 10 characters.</li>
+                        <li>Category name must not contain any special characters, spaces or numbers.</li>
+                        <li>Color selection is mandatory.</li>
+                    </ul>
+                    <input type="submit" value="Create">
+                </form>
+            </div>
+        </div>
     </div>
 </header>
 <main>
     <% 
         const currentDate = new Date();
         const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay(); // 0 for Sunday, 1 for Monday, etc.
+        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay(); 
     %>
     <% 
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     %>
     <div class="commonBox">
-        <h2 style="text-align: center;"><%= monthNames[currentDate.getMonth()] %> <%= currentDate.getFullYear() %></h2>
+        <h2><%= monthNames[currentDate.getMonth()] %> <%= currentDate.getFullYear() %></h2>
         <ul>
             <li>This calendar holds all your tasks for the current month.</li>
             <li>It is advised to keep tasks shorter, it will be easier for you to manage and go through them.</li>
@@ -56,11 +130,11 @@
                 In the calendar view, we do not keep track of previous months.</li>
         </ul>
     </div>
-    <table style="width: 80%; border-collapse: collapse; padding: 2rem; font-family: 'Kanit', sans-serif;">
+    <table class="calendar-view-table">
         <thead>
             <tr>
                 <% for (let i = 0; i < dayNames.length; i++) { %>
-                    <th style="width: 150px; text-align: center; padding: 10px 0px; border: 1px solid #e4e3e3;">
+                    <th>
                         <%= dayNames[(i + firstDayOfMonth) % 7] %>
                     </th>
                 <% } %>
@@ -71,7 +145,7 @@
                 <% if (day % 7 === 1) { %>
                     <tr>
                 <% } %>
-                <td style="text-align: center; border: 1px solid #e4e3e3;">
+                <td>
                     <div class="box">
                         <div class="<% if(day === new Date().getDate()) { %> box-current-date <% } else { %> box-date <% } %>">
                             <%= day %>
