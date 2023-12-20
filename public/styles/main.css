@@ -51,55 +51,65 @@ header {
 
 header form {
     grid-area: 1 / 2 / 1 / 2;
-    width: 98%;
+    width: 96%;
     justify-content: center;
     align-items: center;
-    padding: 0;
+    padding: 2px 0;
     border-radius: 5px;
     position: relative;
+    border:  1px solid #e4e3e3;
 }
 
 header input[type=text], 
 header input[type=text]:focus, 
 header input[type=text]:active {
     background-color: transparent;
-    border: 2px solid #4c474d;
-    padding: 15px 10px;
-    width: 70%;
+    border: none;
+    padding: 18px 10px;
+    width: 75%;
     font-family: 'Kanit', sans-serif;
     font-size: 16px;
     outline: none;
     border-radius: 5px;
-}
-
-header select {
-    background-color: transparent;
-    border-top: none;
-    border-right: 2px solid #4c474d;
-    border-bottom: none;
-    border-left: 2px solid #4c474d;
-    padding: 15px 10px 15px 10px;
-    font-family: 'Kanit', sans-serif;
-    font-size: 16px;
-    outline: none;
-    margin-left: -4px;
-    cursor: pointer;
-}
-
-header select option {
-    background-color: #fffde8;
-    color: #4c474d;
 }
 
 header input[type=submit] {
-    background-color: transparent;
-    border: 2px solid #4c474d;
-    padding: 15px 12px 15px 12px;
+    color: #fffde8;
+    background-color: #4c8492;
+    border: none;
+    padding: 15px 10px;
     cursor: pointer;
     font-family: 'Kanit', sans-serif;
     font-size: 16px;
     outline: none;
     border-radius: 5px;
+}
+
+header button {
+    background-color: transparent;
+    padding: 15px 10px;
+    cursor: pointer;
+    font-family: 'Kanit', sans-serif;
+    font-size: 16px;
+    outline: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid #e4e3e3;
+}
+
+header button i {
+    float: none;
+    font-style: normal;
+}
+
+header button span {
+    float: right;
+    margin-left: 10px;
+}
+
+header button span.hidden {
+    display: none;
 }
 
 .category-dropdown {
@@ -109,7 +119,7 @@ header input[type=submit] {
     min-width: 180px;
     min-height: 300px;
     top: 104%;
-    right: 8%;
+    right: 5%;
     padding: 0;
     background-color: #fffde8;
     z-index: 1;
@@ -168,30 +178,6 @@ header input[type=submit] {
     font-size: 15px;
     padding: 10px 0 0 0;
     margin: 5px 0 0 3px;
-}
-
-header button {
-    background-color: transparent;
-    padding: 15px 10px 15px 10px;
-    cursor: pointer;
-    font-family: 'Kanit', sans-serif;
-    font-size: 16px;
-    outline: none;
-    border: none;
-}
-
-header button i {
-    float: none;
-    font-style: normal;
-}
-
-header button span {
-    float: right;
-    margin-left: 10px;
-}
-
-header button span.hidden {
-    display: none;
 }
 
 input[type="checkbox"]::before {
@@ -437,6 +423,7 @@ main {
     font-size: 16px;
     border-radius: 5px;
     border: 2px solid #4c474d;
+    color: #4c474d;
     background-color: transparent;
     outline: none;
     font-family: 'Kanit', sans-serif;
@@ -444,6 +431,7 @@ main {
 
 .dropdown input[type=submit]:hover, .dropdown input[type=submit]:focus, .dropdown input[type=submit]:active {
     border: 2px solid #000;
+    color: #000;
     background-color: transparent;
 }
 
@@ -1388,7 +1376,7 @@ footer {
     }
     
     header form input[type=submit] {
-        background-color: transparent;
+        background-color: #4c8492;
         border: 1px solid #e4e3e3;
         padding: 15px 7px;
         border-radius: 5px;

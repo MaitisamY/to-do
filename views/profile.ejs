@@ -141,7 +141,7 @@
                 </ul>
             </div>
             <div id="changeProfilePassword" hidden>
-                <form action="/profile/update-password" method="POST">
+                <form id="changePasswordForm" action="/profile/update-password" method="POST">
                     <div class="password-row">
                         <input 
                             id="currentPassword"
@@ -153,19 +153,21 @@
                         >
                         <a style="display: none;" id="currentPasswordVisible" onclick="currentPasswordVisibility()">
                             <img 
-                                src="/images/eye.svg" 
-                                alt="eye password toggler" 
-                                width="30" 
-                                height="30"
-                            >
-                        </a>
-                        <a id="currentPasswordInvisible" onclick="currentPasswordInvisibility()">
-                            <img 
                                 src="/images/eye-slash.svg" 
                                 alt="eye password toggler" 
                                 width="30" 
                                 height="30"
-                            >
+                                title="Hide password"
+                            />
+                        </a>
+                        <a id="currentPasswordInvisible" onclick="currentPasswordInvisibility()">
+                            <img 
+                                src="/images/eye.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                                title="Show password"
+                            />
                         </a>
                     </div>
                     <div class="password-row">
@@ -180,19 +182,21 @@
                         >
                         <a style="display: none;" id="newPasswordVisible" onclick="newPasswordVisibility()">
                             <img 
-                                src="/images/eye.svg" 
-                                alt="eye password toggler" 
-                                width="30" 
-                                height="30"
-                            >
-                        </a>
-                        <a id="newPasswordInvisible" onclick="newPasswordInvisibility()">
-                            <img 
                                 src="/images/eye-slash.svg" 
                                 alt="eye password toggler" 
                                 width="30" 
                                 height="30"
-                            >
+                                title="Hide password"
+                            />
+                        </a>
+                        <a id="newPasswordInvisible" onclick="newPasswordInvisibility()">
+                            <img 
+                                src="/images/eye.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                                title="Show password"
+                            />
                         </a>
                     </div>
                     <div class="password-row">
@@ -207,19 +211,21 @@
                         >
                         <a style="display: none;" id="reTypeNewPasswordVisible" onclick="reTypeNewPasswordVisibility()">
                             <img 
-                                src="/images/eye.svg" 
-                                alt="eye password toggler" 
-                                width="30" 
-                                height="30"
-                            >
-                        </a>
-                        <a id="reTypeNewPasswordInvisible" onclick="reTypeNewPasswordInvisibility()">
-                            <img 
                                 src="/images/eye-slash.svg" 
                                 alt="eye password toggler" 
                                 width="30" 
                                 height="30"
-                            >
+                                title="Hide password"
+                            />
+                        </a>
+                        <a id="reTypeNewPasswordInvisible" onclick="reTypeNewPasswordInvisibility()">
+                            <img 
+                                src="/images/eye.svg" 
+                                alt="eye password toggler" 
+                                width="30" 
+                                height="30"
+                                title="Show password"
+                            />
                         </a>
                     </div>
                     <input type="submit" value="Update">
@@ -230,16 +236,16 @@
                 </ul>
             </div>
             <div class="link-holder">
-                <a class="short" id="edit-profile" onclick="editProfile()">
+                <a title="Edit profile" class="short" id="edit-profile" onclick="editProfile()">
                     <img alt="Edit profile icon" src="/images/profile-edit.png" width="30" height="30" />
                 </a>
-                <a class="short" id="change-password" onclick="changePassword()">
+                <a title="Change password" class="short" id="change-password" onclick="changePassword()">
                     <img alt="Change password icon" src="/images/password.png" width="30" height="30" />
                 </a>
-                <a class="long" id="cancel-edit-profile" onclick="cancelEditProfile()">
+                <a title="Cancel" class="long" id="cancel-edit-profile" onclick="cancelEditProfile()">
                     <img alt="Cancel edit profile icon" src="/images/cross.png" width="30" height="30" />
                 </a>
-                <a class="long" id="cancel-change-password" onclick="cancelChangePassword()">
+                <a title="Cancel" class="long" id="cancel-change-password" onclick="cancelChangePassword()">
                     <img alt="Cancel change password icon" src="/images/cross.png" width="30" height="30" />
                 </a>
             </div>

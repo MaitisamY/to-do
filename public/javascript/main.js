@@ -29,6 +29,7 @@ categoryDropdownBtn.addEventListener("click", () => {
 
 dropdownBtn.addEventListener("click", () => {
     dropdown.classList.toggle("show");
+    inputElement.value = "";
 });
 
 window.addEventListener("click", (event) => {
@@ -184,6 +185,7 @@ function cancelChangePassword(){
     document.getElementById("change-password").style.display = "inline-block";
     document.getElementById("show-name").style.display = "inline-block";
     document.getElementById("show-email").style.display = "inline-block";
+    document.getElementById("changePasswordForm").reset();
 }
 
 function currentPasswordVisibility() {
